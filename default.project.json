@@ -1,0 +1,14 @@
+{
+  "name": "windui_icons",
+  "tree": {
+    "$className": "DataModel",
+
+    "roblox_packages": {
+      "$path": "roblox_packages"
+    },
+
+    "lib": {
+      "$path": "lib"
+    }
+  }
+}

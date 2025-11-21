@@ -1,0 +1,21 @@
+name = "kiciahook/windui_icons"
+version = "0.0.0"
+license = "MIT"
+description = "Unofficial pesde package for the WindUI icons library"
+
+includes = [
+  "pesde.toml",
+  "lib/**/*.luau",
+]
+
+[target]
+environment = "roblox"
+lib = "lib/init.luau"
+build_files = ["lib"]
+
+[indices]
+default = "https://github.com/pesde-pkg/index"
+
+[dev_dependencies]
+selene = { name = "pesde/selene", version = "^0.29.0", target = "lune" }
+stylua = { name = "pesde/stylua", version = "^2.0.2", target = "lune" }
