@@ -6,13 +6,15 @@ local IconModule = {
     New = nil,  
     IconThemeTag = nil,  
       
-    Icons = {  
-        ["lucide"] = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Footagesus/Icons/refs/heads/main/lucide/dist/Icons.lua"))(),  
-        ["craft"] = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Footagesus/Icons/refs/heads/main/craft/dist/Icons.lua"))(),  
-        ["geist"] = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Footagesus/Icons/refs/heads/main/geist/dist/Icons.lua"))(),  
-        ["sfsymbols"] = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Footagesus/Icons/refs/heads/main/sfsymbols/dist/Icons.lua"))(),  
-    },
-}  
+    Icons = {},
+}
+
+local ICON_URLS = {  
+    ["lucide"] = "https://raw.githubusercontent.com/Footagesus/Icons/refs/heads/main/lucide/dist/Icons.lua",  
+    ["craft"] = "https://raw.githubusercontent.com/Footagesus/Icons/refs/heads/main/craft/dist/Icons.lua",  
+    ["geist"] = "https://raw.githubusercontent.com/Footagesus/Icons/refs/heads/main/geist/dist/Icons.lua",  
+    ["sfsymbols"] = "https://raw.githubusercontent.com/Footagesus/Icons/refs/heads/main/sfsymbols/dist/Icons.lua",  
+}
   
 local function parseIconString(iconString)  
     if type(iconString) == "string" then  
@@ -33,10 +35,12 @@ function IconModule.AddIcons(packName, iconsData)
     end
     
     if not IconModule.Icons[packName] then
-        IconModule.Icons[packName] = {
-            Icons = {},
-            Spritesheets = {}
-        }
+        if ICON_URLS[packName] == nil then
+            IconModule.Icons[packName] = {
+                Icons = {},
+                Spritesheets = {}
+            }
+        end
     end
     
     for iconName, iconValue in pairs(iconsData) do
@@ -95,9 +99,13 @@ function IconModule.Icon(Icon, Type, DefaultFormat)
     local iconType, iconName = parseIconString(Icon)  
       
     local targetType = iconType or Type or IconModule.IconsType  
-    local targetName = iconName  
+    local targetName = iconName
       
-    local iconSet = IconModule.Icons[targetType]  
+    local iconSet = IconModule.Icons[targetType]
+    if iconSet == nil and ICON_URLS[targetType] ~= nil then
+        iconSet = loadstring(game:HttpGetAsync(ICON_URLS[targetType]))()
+        IconModule.Icons[targetType] = iconSet
+    end
       
     if iconSet and iconSet.Icons and iconSet.Icons[targetName] then  
         return {   
