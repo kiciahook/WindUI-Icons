@@ -1,0 +1,10 @@
+name = "kiciahook/windui_icons"
+version = "0.1.0"
+license = "MIT"
+description = "Unofficial pesde package for the WindUI icons library"
+
+includes = ["pesde.toml", "README.md", "LICENSE", "Main-v2.lua"]
+
+[target]
+environment = "roblox"
+lib = "Main-v2.lua"
